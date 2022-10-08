@@ -15,7 +15,7 @@ class MyApp extends StatefulWidget{
 }
 
 class MyAppState extends State<MyApp> {
-  var count = 1;
+  var count = 5;
 
   void incrementCounter(){
     setState(() {

@@ -45,7 +45,7 @@ class MyAppState extends State<MyApp> {
           // margin: EdgeInsets.all(10),
           padding: EdgeInsets.all(50),
           decoration: BoxDecoration(
-            border: Border.all(width: 20, color: Colors.red),
+            border: Border.all(width: 20, color: Colors.blue),
             color: Colors.amber,
             borderRadius: BorderRadius.all(Radius.circular(50))
           ) ,
