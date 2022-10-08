@@ -19,7 +19,7 @@ class MyAppState extends State<MyApp> {
 
   void incrementCounter() {
     setState(() {
-      count++;
+      count = count +1;
     });
     print('increment counter function called: $count');
   }
