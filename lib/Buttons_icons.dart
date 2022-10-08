@@ -19,9 +19,9 @@ class MyAppState extends State<MyApp> {
 
   void incrementCounter() {
     setState(() {
-      count = count +1;
+      count = count + 2;
     });
-    print('increment counter function called: $count');
+    print('increment counter function refactored by 2: $count');
   }
 
   @override
