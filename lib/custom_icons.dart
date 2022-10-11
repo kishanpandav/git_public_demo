@@ -42,34 +42,16 @@ class MyAppState extends State<MyApp> {
               title: const Text('My App'),
             ),
             body: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    child: Text('This is text 1'),
-                    color: Colors.amber,
-                  ),
-                ),
-                Expanded(
-                  flex: 20,
-                  child: Container(
-                    child: Text('This is text 2'),
-                    color: Colors.red,
-                  ),
-                ),
-                Text('This is text 3'),
-                Icon(Medical.medical_capsual),
-                Expanded(
-                  flex: 20,
-                  child: Container(
-                    color: Colors.black12,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Icon(Medical.medical_eyecare),
-                    ),
-                  ),
-                )
+               Image.asset('assets/images/flutter.png', height: 200),
+               SizedBox(height: 50,),
+               Container(
+                height: 100,
+                width: 100,
+                color: Colors.amberAccent,
+                 child: Image.network('https://cdn.sanity.io/images/s7xbv9bz/production/1562d4dae8dc03456edca898e89c0f39ae086a8f-1600x1000.png?w=1200&h=750&auto=format&fm=webp',
+                 fit: BoxFit.contain),
+               )
               ],
             )));
   }
