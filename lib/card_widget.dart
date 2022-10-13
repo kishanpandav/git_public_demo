@@ -105,67 +105,39 @@ class MyAppState extends State<MyApp> {
           profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
     ];
 
-    dream11Players.add(
-      Player(
-          name: 'Ishan Kishan',
-          backgroundColor: Colors.blue,
-          team: 'Mumbai Indians',
-          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
-    );
     return MaterialApp(
       title: 'My App vxsdfgg',
       home: Scaffold(
           appBar: AppBar(
             title: const Text('My App'),
           ),
-          body: Container(
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    reverse: true,
-                    scrollDirection: Axis.horizontal,
-                    children: dream11Players.map((player) {
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)),
-                        // color: player.backgroundColor,
-                        child: Container(
-                          child: Row(
-                            children: [
-                              Image.network(
-                                player.profilPic,
-                                width: 100,
-                                height: 100,
-                              ),
-                              // SizedBox(width: 20),
-                              // Column(
-                              //   crossAxisAlignment: CrossAxisAlignment.start,
-                              //   children: [
-                              //     Text('Player Name: ${player.name}'),
-                              //     Text('Team Name: ${player.team}')
-                              //   ],
-                              // )
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList(),
+          body: Column(
+            children: dream11Players.map((player) {
+              return Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25) 
+                ) ,
+                color: player.backgroundColor,
+                child: Container(
+                  child: Row(
+                    children: [
+                      Image.network(
+                        player.profilPic,
+                        width: 100,
+                        height: 100,
+                      ),
+                      SizedBox(width: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                        Text('Player Name: ${player.name}'),
+                        Text('Team Name: ${player.team}')
+                      ],)
+                    ],
                   ),
                 ),
-                Expanded(
-                  flex: 6,
-                  child: ListView(
-                    children: dream11Players.map((player) {
-                      return ListTile(title: Text('${player.name}'),
-                      subtitle: Text('${player.team}'),
-                      leading: Image.network(player.profilPic, width: 100,),
-                      trailing: Container(child: Text(''), color: player.backgroundColor, width: 50, height: 100,),);
-                    }).toList(),
-                  ),
-                ),
-              ],
-            ),
+              );
+            }).toList(),
           )),
     );
   }
