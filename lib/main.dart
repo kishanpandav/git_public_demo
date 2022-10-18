@@ -121,49 +121,70 @@ class MyAppState extends State<MyApp> {
           body: Container(
             child: Column(
               children: [
-                Expanded(
-                  child: ListView(
-                    reverse: true,
-                    scrollDirection: Axis.horizontal,
-                    children: dream11Players.map((player) {
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)),
-                        // color: player.backgroundColor,
-                        child: Container(
-                          child: Row(
-                            children: [
-                              Image.network(
-                                player.profilPic,
-                                width: 100,
-                                height: 100,
-                              ),
-                              // SizedBox(width: 20),
-                              // Column(
-                              //   crossAxisAlignment: CrossAxisAlignment.start,
-                              //   children: [
-                              //     Text('Player Name: ${player.name}'),
-                              //     Text('Team Name: ${player.team}')
-                              //   ],
-                              // )
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-                Expanded(
-                  flex: 6,
-                  child: ListView(
-                    children: dream11Players.map((player) {
-                      return ListTile(title: Text('${player.name}'),
+                // Expanded(
+                //   child: ListView(
+                //     reverse: true,
+                //     scrollDirection: Axis.horizontal,
+                //     children: dream11Players.map((player) {
+                //       return Card(
+                //         shape: RoundedRectangleBorder(
+                //             borderRadius: BorderRadius.circular(25)),
+                //         // color: player.backgroundColor,
+                //         child: Container(
+                //           child: Row(
+                //             children: [
+                //               Image.network(
+                //                 player.profilPic,
+                //                 width: 100,
+                //                 height: 100,
+                //               ),
+                //               // SizedBox(width: 20),
+                //               // Column(
+                //               //   crossAxisAlignment: CrossAxisAlignment.start,
+                //               //   children: [
+                //               //     Text('Player Name: ${player.name}'),
+                //               //     Text('Team Name: ${player.team}')
+                //               //   ],
+                //               // )
+                //             ],
+                //           ),
+                //         ),
+                //       );
+                //     }).toList(),
+                //   ),
+                // ),
+                Expanded(child: ListView.separated(itemBuilder: (context, index){
+                  Player player = dream11Players[index];
+                  // return Text('$index');
+                    return ListTile(title: Text('${player.name}'),
                       subtitle: Text('${player.team}'),
                       leading: Image.network(player.profilPic, width: 100,),
                       trailing: Container(child: Text(''), color: player.backgroundColor, width: 50, height: 100,),);
-                    }).toList(),
-                  ),
-                ),
+                }, separatorBuilder: (context, int){
+                  if(int >= 0){
+                    return Divider(color: Colors.amber,thickness: 10.0,);
+                  }else{
+                  return SizedBox(); //Divider(color: Colors.amber,thickness: 10.0,);
+                  }
+                }, itemCount: dream11Players.length)),
+                // Expanded(child: ListView.builder(itemCount: dream11Players.length, itemBuilder: (context, index){
+                //   Player player = dream11Players[index];
+                //   // return Text('$index');
+                //     return ListTile(title: Text('${player.name}'),
+                //       subtitle: Text('${player.team}'),
+                //       leading: Image.network(player.profilPic, width: 100,),
+                //       trailing: Container(child: Text(''), color: player.backgroundColor, width: 50, height: 100,),);
+                // })),
+                // Expanded(
+                //   child: ListView(
+                //     children: dream11Players.map((player) {
+                //       return ListTile(title: Text('${player.name}'),
+                //       subtitle: Text('${player.team}'),
+                //       leading: Image.network(player.profilPic, width: 100,),
+                //       trailing: Container(child: Text(''), color: player.backgroundColor, width: 50, height: 100,),);
+                //     }).toList(),
+                //   ),
+                // ),
               ],
             ),
           )),
