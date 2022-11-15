@@ -103,6 +103,86 @@ class MyAppState extends State<MyApp> {
           backgroundColor: Colors.blue,
           team: 'Mumbai Indians',
           profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
+      Player(
+          name: 'Rohit Sharma',
+          backgroundColor: Colors.blue,
+          team: 'Mumbai Indians',
+          profilPic: 'https://wallpaperaccess.com/full/3882913.jpg'),
     ];
 
     dream11Players.add(
@@ -118,76 +198,86 @@ class MyAppState extends State<MyApp> {
           appBar: AppBar(
             title: const Text('My App'),
           ),
-          body: Container(
-            child: Column(
-              children: [
-                // Expanded(
-                //   child: ListView(
-                //     reverse: true,
-                //     scrollDirection: Axis.horizontal,
-                //     children: dream11Players.map((player) {
-                //       return Card(
-                //         shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(25)),
-                //         // color: player.backgroundColor,
-                //         child: Container(
-                //           child: Row(
-                //             children: [
-                //               Image.network(
-                //                 player.profilPic,
-                //                 width: 100,
-                //                 height: 100,
-                //               ),
-                //               // SizedBox(width: 20),
-                //               // Column(
-                //               //   crossAxisAlignment: CrossAxisAlignment.start,
-                //               //   children: [
-                //               //     Text('Player Name: ${player.name}'),
-                //               //     Text('Team Name: ${player.team}')
-                //               //   ],
-                //               // )
-                //             ],
-                //           ),
-                //         ),
-                //       );
-                //     }).toList(),
-                //   ),
-                // ),
-                Expanded(child: ListView.separated(itemBuilder: (context, index){
-                  Player player = dream11Players[index];
-                  // return Text('$index');
-                    return ListTile(title: Text('${player.name}'),
-                      subtitle: Text('${player.team}'),
-                      leading: Image.network(player.profilPic, width: 100,),
-                      trailing: Container(child: Text(''), color: player.backgroundColor, width: 50, height: 100,),);
-                }, separatorBuilder: (context, int){
-                  if(int >= 0){
-                    return Divider(color: Colors.amber,thickness: 10.0,);
-                  }else{
-                  return SizedBox(); //Divider(color: Colors.amber,thickness: 10.0,);
-                  }
-                }, itemCount: dream11Players.length)),
-                // Expanded(child: ListView.builder(itemCount: dream11Players.length, itemBuilder: (context, index){
-                //   Player player = dream11Players[index];
-                //   // return Text('$index');
-                //     return ListTile(title: Text('${player.name}'),
-                //       subtitle: Text('${player.team}'),
-                //       leading: Image.network(player.profilPic, width: 100,),
-                //       trailing: Container(child: Text(''), color: player.backgroundColor, width: 50, height: 100,),);
-                // })),
-                // Expanded(
-                //   child: ListView(
-                //     children: dream11Players.map((player) {
-                //       return ListTile(title: Text('${player.name}'),
-                //       subtitle: Text('${player.team}'),
-                //       leading: Image.network(player.profilPic, width: 100,),
-                //       trailing: Container(child: Text(''), color: player.backgroundColor, width: 50, height: 100,),);
-                //     }).toList(),
-                //   ),
-                // ),
-              ],
-            ),
-          )),
+          body: GridView.builder(
+              reverse: false,
+              padding: EdgeInsets.all(20),
+              scrollDirection: Axis.vertical,
+              itemCount: dream11Players.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1 ,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 2),
+              itemBuilder: (context, index) {
+                Player player = dream11Players[index];
+                return PlayerCard(player: player,run: 0,);
+              })
+          //  GridView.count(
+          //   mainAxisSpacing: 10,
+          //   crossAxisSpacing: 10,
+          //   padding: EdgeInsets.all(10),
+          //   crossAxisCount: 3,
+          //   physics: BouncingScrollPhysics(),
+          //   children: dream11Players.map((player) {
+          //     return Container(
+          //       child: Text('${player.name}'),
+          //       color: Colors.amber,
+          //     );
+          //     // return Image.network(
+          //     //     player.profilPic,
+          //     //   );
+          //   }).toList(),
+          // ),
+          ),
     );
+  }
+}
+
+class PlayerCard extends StatefulWidget {
+  const PlayerCard({
+    Key? key,
+    required this.player,
+    required this.run,
+  }) : super(key: key);
+
+  final Player player;
+  final num run;
+  
+
+  
+
+  @override
+  State<PlayerCard> createState() => _PlayerCardState();
+}
+
+class _PlayerCardState extends State<PlayerCard> {
+  @override
+  Widget build(BuildContext context) {
+    // return Text('${player.name}');
+     return Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25) 
+                ) ,
+                color: widget.player.backgroundColor,
+                child: Container(
+                  child: Row(
+                    children: [
+                      Image.network(
+                        widget.player.profilPic,
+                        width: 50,
+                        height: 100,
+                      ),
+                      SizedBox(width: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                        Text('Player Name: ${widget.player.name}'),
+                        Text('Team Name: ${widget.player.team}'),
+                        Text('Player runs: ${widget.run}')
+                      ],)
+                    ],
+                  ),
+                ),
+              );
   }
 }
