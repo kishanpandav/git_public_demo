@@ -2,10 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_app/model/person.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/rendering.dart';
 import 'Medical_icons.dart';
+import 'database.dart';
+
 
 void main(List<String> args) {
   runApp(MyApp());
@@ -22,95 +25,54 @@ class MyAppState extends State<MyApp> {
   bool errorFlag = false;
 
   var loginForm =GlobalKey<FormState>();
+  TextEditingController nameController=TextEditingController();
+  TextEditingController cityController=TextEditingController();
 
   RegExp emailExp = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-  
+  DatabaseHelper dbh=DatabaseHelper();
+ late List<Person> retrieve=[];
 
 void initState(){
   super.initState();
-  intializeShardPref();
+  dbh.initDb();
+  
+  
+ 
 }
 
-void intializeShardPref() async{
-  prefs =await  SharedPreferences.getInstance();
-   int no=prefs.getInt('Count') ?? 0;
-   print('this $no');
+
+  
+
+  
+
+
+  onSubmit() async{
+   
+    Person person=Person(name: nameController.text, city: cityController.text);
+    print(person.name);
+  var res=dbh.insertPerson(person);
+  print(res);
+  List<Person> personData=await dbh.retrievePersons();
    setState(() {
-     count=no;
-   });
-  print('Calling');
-
-
-}
-  void incrementCounter() {
-   
-    setState(() {
-      count++;
+    retrieve=personData;
     });
-     prefs.setInt('Count',count);
-    print('increment counter function called: $count');
+
+      
+  print("Number of records ${retrieve.length}");
   }
 
-    String? validateEmail(String? value){
-      if (value != null && emailExp.hasMatch(value)) {
-        return null;
-      }else{
-        return "Enter valid email";
-      }
-    }
+  
 
-   String? validatePassword(String? value){
-      if (value != null && value.length < 8) {
-        return "password must be atleast 8 characters";
-      }else{
-        return null;
-      }
-   }
-
-  onSubmit(){
-    bool? isFormvalid = false;
-    isFormvalid = loginForm.currentState?.validate();
-      if(isFormvalid != null && isFormvalid){
-        loginForm.currentState?.save();
-      }
-    }
-
-   void clearCounter() {
-   
-    setState(() {
-      count=0;
-    });
-    if(prefs != null){
-      prefs.remove('Count');
-    }
-    print('Reset count $count');
-  }
-
-  onTextChange(String value) {
-    print(value.length.toString());
-    if (value.length < 5) {
-      setState(() {
-        errorFlag = true;
-      }); 
-    }else{
-      setState(() {
-        errorFlag = false;
-      });
-    }
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
     debugPaintSizeEnabled = false;
-    var finalButton;
-    var clearButton;
+   
     // if(Platform.isAndroid){
     //   finalButton = ElevatedButton(onPressed: incrementCounter, child: Text('Submit from android'));
     // }else{
-    finalButton = CupertinoButton(
-        child: Text('Increment'), onPressed: incrementCounter);
-        clearButton = CupertinoButton(
-        child: Text('Clear'), onPressed: clearCounter);
+    
     // }
 
     return MaterialApp(
@@ -127,15 +89,15 @@ void intializeShardPref() async{
                     child: 
                   Column(children: [
                     TextFormField(
-                      validator: validateEmail,
+                      controller: nameController,
                       decoration: InputDecoration(
-                        hintText: ('enter email'),
+                        hintText: ('enter name'),
                       ),
                     ),
                     TextFormField(
-                      validator: validatePassword,
+                      controller: cityController,
                       decoration: InputDecoration(
-                        hintText: ('enter password')
+                        hintText: ('enter city')
                       ),
                     ),
                     ElevatedButton(
@@ -143,16 +105,28 @@ void intializeShardPref() async{
                       onPressed: onSubmit, 
                       child: Text('Submit')
                     )
-                  ],))
-                  
-                  // TextField(
-                  //   onChanged: onTextChange,
-                  //   decoration: InputDecoration(
-                  //     errorText: !errorFlag ? null : 'character should be more then five',
-                  //     hintText: 'enter name'
-                  //   ),
+                  ],)),
 
-                  // )
+                  Expanded(child: ListView.builder(
+                    itemCount: retrieve.length,
+                    itemBuilder: (context, index) {
+                    Person per=retrieve[index];
+                    return ListTile(
+                      leading: Text("${per.id}"),
+                      title: Text("Name : ${per.name}"),
+                      subtitle: Text("City :${per.city}"),
+                      trailing: Container(
+                        width: 100,
+                        child: Row(
+                          children: [
+                            IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+                            IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
+                          ],
+                        ),
+                      ),
+                    );
+                  },))
+                 
                 ],
               ),
             )));
