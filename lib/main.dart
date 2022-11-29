@@ -19,6 +19,12 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   late final SharedPreferences prefs;
   var count = 1;
+  bool errorFlag = false;
+
+  var loginForm =GlobalKey<FormState>();
+
+  RegExp emailExp = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  
 
 void initState(){
   super.initState();
@@ -44,6 +50,31 @@ void intializeShardPref() async{
      prefs.setInt('Count',count);
     print('increment counter function called: $count');
   }
+
+    String? validateEmail(String? value){
+      if (value != null && emailExp.hasMatch(value)) {
+        return null;
+      }else{
+        return "Enter valid email";
+      }
+    }
+
+   String? validatePassword(String? value){
+      if (value != null && value.length < 8) {
+        return "password must be atleast 8 characters";
+      }else{
+        return null;
+      }
+   }
+
+  onSubmit(){
+    bool? isFormvalid = false;
+    isFormvalid = loginForm.currentState?.validate();
+      if(isFormvalid != null && isFormvalid){
+        loginForm.currentState?.save();
+      }
+    }
+
    void clearCounter() {
    
     setState(() {
@@ -53,6 +84,19 @@ void intializeShardPref() async{
       prefs.remove('Count');
     }
     print('Reset count $count');
+  }
+
+  onTextChange(String value) {
+    print(value.length.toString());
+    if (value.length < 5) {
+      setState(() {
+        errorFlag = true;
+      }); 
+    }else{
+      setState(() {
+        errorFlag = false;
+      });
+    }
   }
 
   @override
@@ -78,9 +122,37 @@ void intializeShardPref() async{
             body: Center(
               child: Column(
                 children: [
-                 Text('$count'),
-                 finalButton,
-                 clearButton
+                  Form(
+                    key: loginForm,
+                    child: 
+                  Column(children: [
+                    TextFormField(
+                      validator: validateEmail,
+                      decoration: InputDecoration(
+                        hintText: ('enter email'),
+                      ),
+                    ),
+                    TextFormField(
+                      validator: validatePassword,
+                      decoration: InputDecoration(
+                        hintText: ('enter password')
+                      ),
+                    ),
+                    ElevatedButton(
+
+                      onPressed: onSubmit, 
+                      child: Text('Submit')
+                    )
+                  ],))
+                  
+                  // TextField(
+                  //   onChanged: onTextChange,
+                  //   decoration: InputDecoration(
+                  //     errorText: !errorFlag ? null : 'character should be more then five',
+                  //     hintText: 'enter name'
+                  //   ),
+
+                  // )
                 ],
               ),
             )));
