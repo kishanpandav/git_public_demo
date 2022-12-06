@@ -23,6 +23,7 @@ class MyAppState extends State<MyApp> {
   late final SharedPreferences prefs;
   var count = 1;
   bool errorFlag = false;
+  late Person editPersonData = Person(name: '', city: ''); 
 
   var loginForm =GlobalKey<FormState>();
   TextEditingController nameController=TextEditingController();
@@ -40,9 +41,30 @@ void initState(){
  
 }
 
+editPerson(Person per){
+  nameController.text=per.name;
+  cityController.text=per.city;
+  setState(() {
+    editPersonData =per;
+  });
 
+
+}
   
+getAllPersons() async {
+    List<Person> personData=await dbh.retrievePersons();
+   setState(() {
+    retrieve=personData;
+    });
+}
 
+onDelete(int id)async{
+int res = await dbh.deletePerson(id);
+if(res == 1){
+  getAllPersons();
+}
+print(res);
+}
   
 
 
@@ -50,12 +72,26 @@ void initState(){
    
     Person person=Person(name: nameController.text, city: cityController.text);
     print(person.name);
-  var res=dbh.insertPerson(person);
-  print(res);
-  List<Person> personData=await dbh.retrievePersons();
-   setState(() {
-    retrieve=personData;
-    });
+    if (editPersonData.id != 0 ){
+      int res = await dbh.updatePerson(person,editPersonData.id);
+      setState(() {
+          editPersonData = Person(name: '', city: '');
+      });
+    
+    }else{
+     var res=dbh.insertPerson(person);
+  
+    print(res);
+
+    }
+     nameController.clear();
+     cityController.clear();
+  
+  getAllPersons();
+  // List<Person> personData=await dbh.retrievePersons();
+  //  setState(() {
+  //   retrieve=personData;
+  //   });
 
       
   print("Number of records ${retrieve.length}");
@@ -103,7 +139,7 @@ void initState(){
                     ElevatedButton(
 
                       onPressed: onSubmit, 
-                      child: Text('Submit')
+                      child: (editPersonData.id != 0 )? Text('Update'): Text( 'Save'),
                     )
                   ],)),
 
@@ -112,6 +148,7 @@ void initState(){
                     itemBuilder: (context, index) {
                     Person per=retrieve[index];
                     return ListTile(
+                      tileColor:per.id==editPersonData.id? Colors.yellow:Colors.white,
                       leading: Text("${per.id}"),
                       title: Text("Name : ${per.name}"),
                       subtitle: Text("City :${per.city}"),
@@ -119,8 +156,8 @@ void initState(){
                         width: 100,
                         child: Row(
                           children: [
-                            IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
-                            IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
+                            IconButton(onPressed: (){editPerson(per);}, icon: Icon(Icons.edit)),
+                            IconButton(onPressed: (){onDelete(per.id);}, icon: Icon(Icons.delete)),
                           ],
                         ),
                       ),
