@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/rendering.dart';
 import 'Medical_icons.dart';
 import 'database.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 void main(List<String> args) {
@@ -20,6 +21,8 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
+  final LatLng suratCoord = const LatLng(21.1, 72.83);
+  late GoogleMapController mapController;
   late final SharedPreferences prefs;
   var count = 1;
   bool errorFlag = false;
@@ -99,8 +102,18 @@ print(res);
 
   
 
- 
+ _onMapCreated(GoogleMapController controller){
+  mapController = controller;
+ }
 
+_focusOnMumbai(){
+  mapController.animateCamera(
+    CameraUpdate.newCameraPosition(
+      const CameraPosition(target: LatLng(19.076, 72.87),
+      zoom: 11)
+    )
+    );
+}
   @override
   Widget build(BuildContext context) {
     debugPaintSizeEnabled = false;
@@ -117,55 +130,27 @@ print(res);
             appBar: AppBar(
               title: const Text('My App'),
             ),
-            body: Center(
-              child: Column(
-                children: [
-                  Form(
-                    key: loginForm,
-                    child: 
-                  Column(children: [
-                    TextFormField(
-                      controller: nameController,
-                      decoration: InputDecoration(
-                        hintText: ('enter name'),
-                      ),
-                    ),
-                    TextFormField(
-                      controller: cityController,
-                      decoration: InputDecoration(
-                        hintText: ('enter city')
-                      ),
-                    ),
-                    ElevatedButton(
-
-                      onPressed: onSubmit, 
-                      child: (editPersonData.id != 0 )? Text('Update'): Text( 'Save'),
-                    )
-                  ],)),
-
-                  Expanded(child: ListView.builder(
-                    itemCount: retrieve.length,
-                    itemBuilder: (context, index) {
-                    Person per=retrieve[index];
-                    return ListTile(
-                      tileColor:per.id==editPersonData.id? Colors.yellow:Colors.white,
-                      leading: Text("${per.id}"),
-                      title: Text("Name : ${per.name}"),
-                      subtitle: Text("City :${per.city}"),
-                      trailing: Container(
-                        width: 100,
-                        child: Row(
-                          children: [
-                            IconButton(onPressed: (){editPerson(per);}, icon: Icon(Icons.edit)),
-                            IconButton(onPressed: (){onDelete(per.id);}, icon: Icon(Icons.delete)),
-                          ],
-                        ),
-                      ),
-                    );
-                  },))
-                 
-                ],
-              ),
-            )));
+            body: GoogleMap(initialCameraPosition: CameraPosition(
+              target: suratCoord,
+              zoom: 15),
+              onMapCreated: _onMapCreated,
+              mapType: MapType.normal,
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
+              trafficEnabled: true,
+              markers: <Marker>{
+                Marker(markerId: MarkerId("Surat"),
+                position: suratCoord,
+                infoWindow: InfoWindow(title: "Surat City"),
+                draggable: true,
+                onDragEnd: (LatLng coord){
+                  print(coord.latitude);
+                  print(coord.longitude);
+                },)
+              },),
+              floatingActionButton: FloatingActionButton(onPressed:_focusOnMumbai,
+              child: Icon(Icons.location_city),),
+            ),
+            );
   }
 }
